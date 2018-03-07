@@ -1,3 +1,8 @@
+USE master
+GO
+
+CREATE DATABASE treinamento
+GO
 
 USE treinamento;
 GO
@@ -178,13 +183,13 @@ REFERENCES persons.users(id_user)
 GO
 
 ALTER TABLE classes.courses_classes_students
-ADD CONSTRAINT fk_course_class
+ADD CONSTRAINT fk_students_course_class
 FOREIGN KEY (id_course_class)
 REFERENCES classes.courses_classes(id_course_class)
 GO
 
 ALTER TABLE classes.courses_classes_tutors
-ADD CONSTRAINT fk_course_class
+ADD CONSTRAINT fk_tutors_course_class
 FOREIGN KEY (id_course_class)
 REFERENCES classes.courses_classes(id_course_class)
 GO
@@ -196,7 +201,7 @@ REFERENCES courses.tutors(id_course_tutor)
 GO
 
 ALTER TABLE classes.courses_classes_schedule
-ADD CONSTRAINT fk_course_class
+ADD CONSTRAINT fk_schedule_course_class
 FOREIGN KEY (id_course_class)
 REFERENCES classes.courses_classes(id_course_class)
 GO
@@ -224,5 +229,23 @@ GO
 ALTER TABLE contents.courses_classes_activities_students
 ADD CONSTRAINT fk_activity
 FOREIGN KEY (id_activity)
-REFERENCES classes.courses_classes_students(id_activity)
+REFERENCES contents.courses_classes_activities(id_activity)
+GO
+
+ALTER TABLE contents.courses_classes_assessments
+ADD CONSTRAINT fk_course_class_assessments
+FOREIGN KEY (id_course_class)
+REFERENCES classes.courses_classes(id_course_class)
+GO
+
+ALTER TABLE contents.assessments_students
+ADD CONSTRAINT fk_assessments_course_class_student
+FOREIGN KEY (id_course_class_student)
+REFERENCES classes.courses_classes_students(id_course_class_student)
+GO
+
+ALTER TABLE contents.assessments_students
+ADD CONSTRAINT fk_assessment
+FOREIGN KEY (id_assessment)
+REFERENCES contents.courses_classes_assessments(id_assessment)
 GO
